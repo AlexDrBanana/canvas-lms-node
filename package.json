@@ -1,0 +1,52 @@
+{
+  "name": "canvas-lms-node",
+  "version": "0.1.0",
+  "description": "Canvas LMS TypeScript and JavaScript API Library",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "LICENSE",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "test": "vitest run --root .",
+    "test:watch": "vitest --root .",
+    "clean": "rm -rf dist",
+    "prepublishOnly": "npm run clean && npm run build"
+  },
+  "keywords": [
+    "canvas",
+    "lms",
+    "api",
+    "instructure",
+    "typescript"
+  ],
+  "homepage": "https://github.com/AlexDrBanana/canvas-lms-node#readme",
+  "bugs": {
+    "url": "https://github.com/AlexDrBanana/canvas-lms-node/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AlexDrBanana/canvas-lms-node.git"
+  },
+  "license": "Apache-2.0",
+  "author": "Alex Guo",
+  "engines": {
+    "node": ">=20"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "dotenv": "^16.4.0",
+    "typescript": "^5.6.0",
+    "vitest": "^3.0.0"
+  }
+}

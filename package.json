@@ -1,6 +1,6 @@
 {
   "name": "canvas-lms-node",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Canvas LMS TypeScript and JavaScript API Library",
   "type": "module",
   "main": "./dist/index.js",

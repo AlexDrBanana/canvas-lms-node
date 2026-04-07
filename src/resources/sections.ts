@@ -61,4 +61,37 @@ export class Sections extends APIResource {
   ): APIPromise<Section> {
     return this._client.post<Section>(`/courses/${courseId}/sections`, { body: params });
   }
+
+  /** Update a section. */
+  update(
+    sectionId: number | string,
+    params: {
+      course_section: {
+        name?: string;
+        sis_section_id?: string;
+        integration_id?: string;
+        start_at?: string | null;
+        end_at?: string | null;
+        restrict_enrollments_to_section_dates?: boolean;
+        [key: string]: unknown;
+      };
+    },
+  ): APIPromise<Section> {
+    return this._client.put<Section>(`/sections/${sectionId}`, { body: params });
+  }
+
+  /** Delete a section. */
+  delete(sectionId: number | string): APIPromise<Section> {
+    return this._client.delete<Section>(`/sections/${sectionId}`);
+  }
+
+  /** Cross-list a section into another course. */
+  crossList(sectionId: number | string, newCourseId: number | string): APIPromise<Section> {
+    return this._client.post<Section>(`/sections/${sectionId}/crosslist/${newCourseId}`);
+  }
+
+  /** De-cross-list a section (return to original course). */
+  deCrossList(sectionId: number | string): APIPromise<Section> {
+    return this._client.delete<Section>(`/sections/${sectionId}/crosslist`);
+  }
 }

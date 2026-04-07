@@ -102,4 +102,19 @@ export class Enrollments extends APIResource {
       query: params ?? { task: 'conclude' },
     });
   }
+
+  /** List enrollments for a section (paginated). */
+  listForSection(sectionId: number | string, params?: EnrollmentListParams): PagePromise<Enrollment> {
+    return this._client.getAPIList<Enrollment>(`/sections/${sectionId}/enrollments`, { query: params });
+  }
+
+  /** Get a single enrollment by ID. */
+  get(accountId: number | string, enrollmentId: number | string): APIPromise<Enrollment> {
+    return this._client.get<Enrollment>(`/accounts/${accountId}/enrollments/${enrollmentId}`);
+  }
+
+  /** Reactivate a deactivated enrollment. */
+  reactivate(courseId: number | string, enrollmentId: number | string): APIPromise<Enrollment> {
+    return this._client.put<Enrollment>(`/courses/${courseId}/enrollments/${enrollmentId}/reactivate`);
+  }
 }

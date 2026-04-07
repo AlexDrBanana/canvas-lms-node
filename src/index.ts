@@ -50,6 +50,9 @@ export type {
   AssignmentListParams,
   AssignmentCreateParams,
   AssignmentUpdateParams,
+  AssignmentOverride,
+  AssignmentOverrideCreateParams,
+  AssignmentOverrideUpdateParams,
 } from './resources/assignments.js';
 
 export type {
@@ -59,9 +62,16 @@ export type {
   SubmissionComment,
   SubmissionListParams,
   SubmissionUpdateParams,
+  SubmissionCreateParams,
 } from './resources/submissions.js';
 
-export type { User, UserListParams } from './resources/users.js';
+export type {
+  User,
+  UserListParams,
+  UserProfile,
+  UserCreateParams,
+  UserUpdateParams,
+} from './resources/users.js';
 
 export type {
   Enrollment,
@@ -69,17 +79,37 @@ export type {
   EnrollmentCreateParams,
 } from './resources/enrollments.js';
 
-export type { CanvasFile, FileListParams } from './resources/files.js';
 
-export type { Group, GroupCategory } from './resources/groups.js';
+export type { CanvasFile, FileListParams, FileUpdateParams } from './resources/files.js';
+
+export type {
+  Group,
+  GroupCategory,
+  GroupMembership,
+  GroupCreateParams,
+  GroupUpdateParams,
+  GroupCategoryCreateParams,
+  GroupCategoryUpdateParams,
+} from './resources/groups.js';
 
 export type {
   Rubric,
   RubricCriterion,
   RubricRating,
   RubricListParams,
+  RubricCreateParams,
+  RubricUpdateParams,
 } from './resources/rubrics.js';
 
 export type { Section, SectionListParams } from './resources/sections.js';
 
-export type { Module, ModuleItem, ModuleListParams } from './resources/modules.js';
+
+export type {
+  Module,
+  ModuleItem,
+  ModuleListParams,
+  ModuleCreateParams,
+  ModuleUpdateParams,
+  ModuleItemCreateParams,
+  ModuleItemUpdateParams,
+} from './resources/modules.js';

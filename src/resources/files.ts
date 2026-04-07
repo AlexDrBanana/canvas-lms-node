@@ -42,6 +42,18 @@ export interface FileListParams {
   [key: string]: unknown;
 }
 
+export interface FileUpdateParams {
+  name?: string;
+  parent_folder_id?: number | string;
+  on_duplicate?: 'overwrite' | 'rename';
+  lock_at?: string | null;
+  unlock_at?: string | null;
+  locked?: boolean;
+  hidden?: boolean;
+  visibility_level?: string;
+  [key: string]: unknown;
+}
+
 // --- Resource ---
 
 export class Files extends APIResource {
@@ -68,5 +80,20 @@ export class Files extends APIResource {
   /** List files for a user (paginated). */
   listForUser(userId: number | string, params?: FileListParams): PagePromise<CanvasFile> {
     return this._client.getAPIList<CanvasFile>(`/users/${userId}/files`, { query: params });
+  }
+
+  /** Update a file's attributes. */
+  update(fileId: number | string, params: FileUpdateParams): APIPromise<CanvasFile> {
+    return this._client.put<CanvasFile>(`/files/${fileId}`, { body: params });
+  }
+
+  /** List files for a group (paginated). */
+  listForGroup(groupId: number | string, params?: FileListParams): PagePromise<CanvasFile> {
+    return this._client.getAPIList<CanvasFile>(`/groups/${groupId}/files`, { query: params });
+  }
+
+  /** Get a file's public inline URL (for temporary access). */
+  getPublicUrl(fileId: number | string): APIPromise<{ public_url: string; [key: string]: unknown }> {
+    return this._client.get<{ public_url: string; [key: string]: unknown }>(`/files/${fileId}/public_url`);
   }
 }

@@ -102,6 +102,45 @@ export interface AssignmentUpdateParams {
   assignment: Partial<AssignmentCreateParams['assignment']>;
 }
 
+export interface AssignmentOverride {
+  id: number | string;
+  assignment_id?: number | string;
+  student_ids?: (number | string)[];
+  group_id?: number | string;
+  course_section_id?: number | string;
+  title: string;
+  due_at?: string | null;
+  all_day?: boolean;
+  all_day_date?: string | null;
+  unlock_at?: string | null;
+  lock_at?: string | null;
+  [key: string]: unknown;
+}
+
+export interface AssignmentOverrideCreateParams {
+  assignment_override: {
+    student_ids?: (number | string)[];
+    title?: string;
+    group_id?: number | string;
+    course_section_id?: number | string;
+    due_at?: string | null;
+    unlock_at?: string | null;
+    lock_at?: string | null;
+    [key: string]: unknown;
+  };
+}
+
+export interface AssignmentOverrideUpdateParams {
+  assignment_override: {
+    student_ids?: (number | string)[];
+    title?: string;
+    due_at?: string | null;
+    unlock_at?: string | null;
+    lock_at?: string | null;
+    [key: string]: unknown;
+  };
+}
+
 // --- Resource ---
 
 export class Assignments extends APIResource {
@@ -136,5 +175,64 @@ export class Assignments extends APIResource {
   /** Delete an assignment. */
   delete(courseId: number | string, assignmentId: number | string): APIPromise<Assignment> {
     return this._client.delete<Assignment>(`/courses/${courseId}/assignments/${assignmentId}`);
+  }
+
+  /** List assignment overrides (paginated). */
+  listOverrides(
+    courseId: number | string,
+    assignmentId: number | string,
+    params?: { per_page?: number; [key: string]: unknown },
+  ): PagePromise<AssignmentOverride> {
+    return this._client.getAPIList<AssignmentOverride>(
+      `/courses/${courseId}/assignments/${assignmentId}/overrides`,
+      { query: params },
+    );
+  }
+
+  /** Get a single assignment override. */
+  getOverride(
+    courseId: number | string,
+    assignmentId: number | string,
+    overrideId: number | string,
+  ): APIPromise<AssignmentOverride> {
+    return this._client.get<AssignmentOverride>(
+      `/courses/${courseId}/assignments/${assignmentId}/overrides/${overrideId}`,
+    );
+  }
+
+  /** Create an assignment override. */
+  createOverride(
+    courseId: number | string,
+    assignmentId: number | string,
+    params: AssignmentOverrideCreateParams,
+  ): APIPromise<AssignmentOverride> {
+    return this._client.post<AssignmentOverride>(
+      `/courses/${courseId}/assignments/${assignmentId}/overrides`,
+      { body: params },
+    );
+  }
+
+  /** Update an assignment override. */
+  updateOverride(
+    courseId: number | string,
+    assignmentId: number | string,
+    overrideId: number | string,
+    params: AssignmentOverrideUpdateParams,
+  ): APIPromise<AssignmentOverride> {
+    return this._client.put<AssignmentOverride>(
+      `/courses/${courseId}/assignments/${assignmentId}/overrides/${overrideId}`,
+      { body: params },
+    );
+  }
+
+  /** Delete an assignment override. */
+  deleteOverride(
+    courseId: number | string,
+    assignmentId: number | string,
+    overrideId: number | string,
+  ): APIPromise<AssignmentOverride> {
+    return this._client.delete<AssignmentOverride>(
+      `/courses/${courseId}/assignments/${assignmentId}/overrides/${overrideId}`,
+    );
   }
 }

@@ -30,7 +30,6 @@ export interface Submission {
   entered_score?: number | null;
   attachments?: SubmissionAttachment[];
   rubric_assessment?: Record<string, RubricAssessmentEntry>;
-  full_rubric_assessment?: Record<string, RubricAssessmentEntry>;
   submission_comments?: SubmissionComment[];
   [key: string]: unknown;
 }
@@ -103,6 +102,25 @@ export interface SubmissionUpdateParams {
   [key: string]: unknown;
 }
 
+export interface SubmissionCreateParams {
+  submission: {
+    submission_type: 'online_text_entry' | 'online_url' | 'online_upload' | 'media_recording' | 'basic_lti_launch' | 'student_annotation';
+    body?: string;
+    url?: string;
+    file_ids?: (number | string)[];
+    media_comment_id?: string;
+    media_comment_type?: 'audio' | 'video';
+    user_id?: number | string;
+    annotatable_attachment_id?: number | string;
+    submitted_at?: string;
+    [key: string]: unknown;
+  };
+  comment?: {
+    text_comment?: string;
+    [key: string]: unknown;
+  };
+}
+
 // --- Resource ---
 
 export class Submissions extends APIResource {
@@ -152,6 +170,18 @@ export class Submissions extends APIResource {
     return this._client.getAPIList<Submission>(
       `/courses/${courseId}/students/submissions`,
       { query: params },
+    );
+  }
+
+  /** Submit an assignment. */
+  submit(
+    courseId: number | string,
+    assignmentId: number | string,
+    params: SubmissionCreateParams,
+  ): APIPromise<Submission> {
+    return this._client.post<Submission>(
+      `/courses/${courseId}/assignments/${assignmentId}/submissions`,
+      { body: params },
     );
   }
 }

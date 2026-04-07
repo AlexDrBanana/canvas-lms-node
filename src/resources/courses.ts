@@ -97,6 +97,11 @@ export class Courses extends APIResource {
     return this._client.getAPIList<Course>('/courses', { query: params });
   }
 
+  /** List courses for a specific user (paginated). */
+  listForUser(userId: number | string, params?: CourseListParams): PagePromise<Course> {
+    return this._client.getAPIList<Course>(`/users/${userId}/courses`, { query: params });
+  }
+
   /** Get a single course by ID. */
   get(courseId: number | string, params?: { include?: string[] }): import('../core/api-promise.js').APIPromise<Course> {
     return this._client.get<Course>(`/courses/${courseId}`, { query: params });
